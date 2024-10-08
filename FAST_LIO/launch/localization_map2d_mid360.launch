@@ -1,0 +1,20 @@
+<launch>
+<!-- Launch file for Livox MID360 LiDAR -->
+	<include file="$(find fast_lio)/launch/localization_mid360.launch">
+	</include>
+
+	<!-- load 2d map -->
+	<node name = "map_server" pkg = "map_server" type = "map_server" args="/home/orangepi/map2d/map2d_furui.yaml /map:=prior_map_2d"/>
+
+	<!-- pointscloud2 to laserscans -->
+	<include file="$(find fast_lio)/launch/PointsCloud2toLaserscan.launch">
+	</include>
+
+	<!-- 发布一个雷达body到机器人足端body_foot的静态映射 -->
+	<node pkg="tf2_ros" type="static_transform_publisher" name="tf_pub_1" args="0.0 0.0 -0.3  0 0 0 body body_foot" />
+	<!-- 发布一个雷达初始位置camera_init到机器人足端初始位置body_init的静态映射 -->
+	<node pkg="tf2_ros" type="static_transform_publisher" name="tf_pub_2" args="0.0 0.0 -0.3  0 0 0 camera_init robot_foot_init" />
+	<!-- 发布一个雷达初始位置camera_init到map的静态映射 -->
+	<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="tf_pub_3" args="0 0 0 0 0 0 map camera_init" /> -->
+
+</launch>
