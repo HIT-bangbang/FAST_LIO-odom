@@ -1,0 +1,9 @@
+<launch>
+
+  <arg name="save_path" default="/home/orangepi/map2d"/>
+  <arg name="map_name" default="map2d_furui"/>
+
+  <!-- Run the map server -->
+  <node name="map_saver" pkg="map_server" type="map_saver" args="-f $(arg save_path)/$(arg map_name)" />
+
+</launch>
